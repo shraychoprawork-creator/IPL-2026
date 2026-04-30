@@ -1,0 +1,1717 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IPL 2026 — Standings · Stats · Schedule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0c0e;
+    --bg-2: #131316;
+    --ink: #f1ede2;
+    --ink-soft: #b8b3a4;
+    --muted: #76746c;
+    --faint: #45433f;
+    --line: #1c1c1f;
+    --line-2: #2a2a2d;
+    --accent: #ff6a3d;
+    --accent-2: #ffb38a;
+    --accent-soft: rgba(255,106,61,0.14);
+    --good: #7fbf90;
+    --bad:  #e5715b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 0%, rgba(255,106,61,0.06), transparent 50%),
+      radial-gradient(circle at 80% 100%, rgba(255,106,61,0.04), transparent 50%);
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 56px 120px;
+  }
+
+  /* ============= NAV ============= */
+  nav.bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 12.5px;
+  }
+  nav.bar .mark {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  nav.bar .mark .sl { color: var(--accent); }
+  nav.bar .mark svg { display: block; }
+  nav.bar ul {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0; padding: 0;
+    color: var(--ink-soft);
+  }
+  nav.bar ul a {
+    color: inherit;
+    text-decoration: none;
+    transition: color .2s;
+  }
+  nav.bar ul a:hover { color: var(--ink); }
+  nav.bar .live {
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  nav.bar .live::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(255,106,61,0.6);
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255,106,61,0.55); }
+    70%  { box-shadow: 0 0 0 8px rgba(255,106,61,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,106,61,0); }
+  }
+
+  /* ============= HERO ============= */
+  .hero {
+    margin-top: 84px;
+    margin-bottom: 120px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+    position: relative;
+  }
+
+  .hero .ball-art {
+    position: absolute;
+    right: -40px;
+    top: -20px;
+    width: 280px;
+    height: 280px;
+    opacity: 0.92;
+    pointer-events: none;
+  }
+  @media (max-width: 1100px) {
+    .hero .ball-art { width: 220px; height: 220px; right: -10px; }
+  }
+
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .hero .eyebrow .pill {
+    border: 1px solid var(--line-2);
+    padding: 4px 10px;
+    border-radius: 100px;
+    color: var(--ink-soft);
+  }
+  .hero .eyebrow .pill.acc { color: var(--accent); border-color: rgba(255,106,61,0.35); background: var(--accent-soft); }
+
+  .hero h1 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: clamp(64px, 11vw, 168px);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    margin: 0;
+    color: var(--ink);
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 .ser {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .hero h1 .dim { color: var(--faint); }
+
+  /* season progress dot-grid */
+  .season-grid {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 24px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+  }
+  .season-grid .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .season-grid .label b {
+    display: block;
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    margin-bottom: 4px;
+    font-feature-settings: "tnum";
+  }
+  .season-grid .dots {
+    display: grid;
+    grid-template-columns: repeat(31, 1fr);
+    gap: 6px;
+    flex: 1;
+  }
+  .season-grid .dot {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: var(--faint);
+    transition: transform .2s;
+  }
+  .season-grid .dot.next { background: var(--accent); box-shadow: 0 0 0 3px rgba(255,106,61,0.18); }
+  .season-grid .dot.upcoming { background: transparent; border: 1px solid var(--line-2); }
+  .season-grid .dot:hover { transform: scale(1.3); }
+
+  .hero-foot {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .hero-foot .blurb {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--ink-soft);
+    max-width: 32ch;
+  }
+  .hero-foot .stat .n {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .hero-foot .stat .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  /* ============= FEATURED PLAYER ============= */
+  .featured-player {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 56px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 56px 0;
+    align-items: center;
+  }
+  .fp-photo {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--bg-2);
+  }
+  .fp-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: contrast(1.05) saturate(0.92);
+  }
+  .fp-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, transparent 50%, rgba(12,12,14,0.45) 100%),
+      linear-gradient(135deg, rgba(255,106,61,0.08), transparent 50%);
+    pointer-events: none;
+  }
+  .fp-photo .credit {
+    position: absolute;
+    bottom: 12px; right: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: rgba(241,237,226,0.55);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .fp-photo .badge {
+    position: absolute;
+    top: 16px; left: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(12,12,14,0.7);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,106,61,0.4);
+    padding: 5px 10px;
+    border-radius: 100px;
+    z-index: 2;
+  }
+
+  .fp-text .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .fp-text .tag b { color: var(--accent); font-weight: 500; margin-right: 6px; }
+  .fp-text h2 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: clamp(36px, 4.5vw, 64px);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 18px 0 20px;
+  }
+  .fp-text h2 .ital {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .fp-text .lede {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    max-width: 36ch;
+  }
+  .fp-stats {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 32px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+  .fp-stats .s .n {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .fp-stats .s .n .acc { color: var(--accent); }
+  .fp-stats .s .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* ============= AVATARS ============= */
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    position: relative;
+  }
+  .avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    filter: contrast(1.05) saturate(0.9);
+  }
+  .leader.top .avatar {
+    width: 42px;
+    height: 42px;
+    border-color: rgba(255,106,61,0.5);
+    box-shadow: 0 0 0 2px rgba(255,106,61,0.15);
+  }
+  .leader.top.purple .avatar {
+    border-color: rgba(168,107,214,0.5);
+    box-shadow: 0 0 0 2px rgba(168,107,214,0.15);
+  }
+  .avatar.mono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+    color: var(--ink-soft);
+    background: var(--bg-2);
+  }
+  .avatar.mono.csk { background: linear-gradient(135deg, #c89b3c33, #c89b3c11); color: #d6b067; }
+  .avatar.mono.srh { background: linear-gradient(135deg, #ff6a3d33, #ff6a3d11); color: #ffa580; }
+  .avatar.mono.lsg { background: linear-gradient(135deg, #d33a4a33, #d33a4a11); color: #e8869a; }
+
+  /* tweak leader to include avatar slot */
+  .leader {
+    grid-template-columns: 22px 42px 1fr 60px auto !important;
+  }
+
+  /* records mini thumbnail */
+  .rec-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    margin-right: 10px;
+    vertical-align: middle;
+    display: inline-block;
+  }
+  .rec-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    filter: contrast(1.05) saturate(0.9);
+  }
+  .rec-row .who { display: flex; align-items: center; flex-wrap: wrap; }
+  .rec-row .who .text { display: inline-block; }
+
+  /* ============= SECTION ============= */
+  section { margin-top: 120px; scroll-margin-top: 40px; }
+
+  .sec-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 32px;
+    align-items: end;
+    margin-bottom: 44px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sec-head .ix {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .sec-head .ix b {
+    color: var(--accent);
+    font-weight: 500;
+    margin-right: 6px;
+  }
+  .sec-head h2 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: clamp(28px, 3.4vw, 44px);
+    letter-spacing: -0.025em;
+    margin: 0;
+    line-height: 1.05;
+    max-width: 24ch;
+  }
+  .sec-head h2 .ital {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .sec-head .stamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  /* ============= STANDINGS ============= */
+  .pt {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .pt thead th {
+    text-align: right;
+    font-weight: 400;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0 0 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .pt thead th:first-child,
+  .pt thead th:nth-child(2),
+  .pt thead th.form-h,
+  .pt thead th.bar-h { text-align: left; }
+  .pt thead th.form-h { padding-left: 16px; }
+  .pt thead th.bar-h  { padding-left: 16px; }
+
+  .pt tbody td {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: right;
+    transition: background-color .2s;
+  }
+
+  .pt tbody tr:hover td {
+    background: rgba(255,106,61,0.03);
+  }
+
+  .pt tbody td.pos {
+    text-align: left;
+    width: 60px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--faint);
+    letter-spacing: -0.02em;
+    font-style: italic;
+  }
+  .pt tbody tr.q td.pos { color: var(--accent); }
+
+  .pt tbody td.team {
+    text-align: left;
+    width: 28%;
+  }
+  .pt tbody td.team .nm {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+  }
+  .pt tbody td.team .ab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.12em;
+  }
+
+  .pt tbody td.num {
+    color: var(--ink-soft);
+  }
+  .pt tbody td.pts {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+  }
+  .pt tbody td.nrr.pos { color: var(--good); }
+  .pt tbody td.nrr.neg { color: var(--bad); }
+
+  .pt tbody td.form-cell {
+    text-align: left;
+    padding-left: 16px;
+    width: 95px;
+  }
+  .form-cell .pip {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  .form-cell .pip.w { background: var(--ink); }
+  .form-cell .pip.l { background: transparent; border: 1px solid var(--faint); }
+
+  .pt tbody td.bar-cell {
+    text-align: left;
+    padding-left: 16px;
+    width: 26%;
+  }
+  .bar-track {
+    position: relative;
+    height: 6px;
+    background: var(--line);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--ink-soft);
+    border-radius: 100px;
+    transition: width 1s ease;
+  }
+  .pt tbody tr.q .bar-fill { background: var(--accent); }
+
+  .pt tbody tr.qline td {
+    border-bottom: 1px solid var(--accent);
+  }
+
+  .pt-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .pt-foot .key {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .pt-foot .key span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .pt-foot .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ============= STATS ============= */
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .stat-col {
+    background: var(--bg);
+    padding: 36px 36px 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .cap-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .cap-tag .swatch {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .cap-tag.purple .swatch { background: #a86bd6; }
+  .cap-tag.amber  .swatch { background: #d6b067; }
+
+  .stat-col h3 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    margin: 16px 0 6px;
+    line-height: 1.1;
+  }
+  .stat-col h3 .ital {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .stat-col .blurb {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 28px;
+    max-width: 28ch;
+  }
+
+  .leader {
+    display: grid;
+    grid-template-columns: 22px 1fr 60px auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .leader:last-child { border-bottom: 0; }
+  .leader .rk {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .leader.top .rk { color: var(--accent); }
+  .leader .who .nm {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .leader .who .tm {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.1em;
+  }
+  .leader .spark {
+    height: 28px;
+    width: 60px;
+  }
+  .leader .val {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    line-height: 1;
+    min-width: 60px;
+  }
+  .leader.top .val { color: var(--accent); }
+  .leader .val .sub {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 9.5px;
+    color: var(--muted);
+    margin-top: 5px;
+    letter-spacing: 0.06em;
+  }
+
+  /* records col */
+  .records-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .rec-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .rec-row:last-child { border-bottom: 0; }
+  .rec-row .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .rec-row .who {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 14.5px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .rec-row .who small {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.08em;
+  }
+  .rec-row .num {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    line-height: 1;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .rec-row .num .acc { color: var(--accent); }
+
+  .stat-col-corner {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    opacity: 0.5;
+  }
+
+  /* ============= FIXTURES ============= */
+  .fixtures {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fix {
+    display: grid;
+    grid-template-columns: 200px 1fr 1.2fr 240px;
+    gap: 40px;
+    align-items: center;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding .25s ease, background-color .25s ease;
+    position: relative;
+  }
+  .fix::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .3s ease;
+  }
+  .fix:hover {
+    padding-left: 16px;
+    background: rgba(255,106,61,0.02);
+  }
+  .fix:hover::before { transform: scaleY(1); }
+
+  .fix.feature {
+    background: linear-gradient(135deg, rgba(255,106,61,0.08), rgba(255,106,61,0.02));
+    border: 1px solid rgba(255,106,61,0.25);
+    border-radius: 4px;
+    padding: 44px 32px;
+    margin: 8px 0 16px;
+    overflow: hidden;
+  }
+  .fix.feature::before { display: none; }
+  .fix.feature::after {
+    content: "";
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,106,61,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .fix.feature:hover { padding-left: 32px; background: linear-gradient(135deg, rgba(255,106,61,0.10), rgba(255,106,61,0.03)); }
+
+  .fix .when {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .fix .when .day {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .fix .when .date {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    margin-top: 6px;
+  }
+  .fix.feature .when .date { color: var(--ink); }
+  .fix .when .time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    letter-spacing: 0.06em;
+  }
+  .fix .when .tag {
+    margin-top: 10px;
+    align-self: flex-start;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(255,106,61,0.35);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: 100px;
+  }
+
+  .fix .matchup {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 18px;
+    align-items: baseline;
+    grid-column: span 2;
+  }
+  .fix .matchup .side .ab {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: clamp(28px, 3.2vw, 42px);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .fix.feature .matchup .side .ab { font-size: clamp(40px, 4.5vw, 60px); }
+  .fix .matchup .side .nm {
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .fix .matchup .side.right { text-align: right; }
+  .fix .matchup .vs {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--faint);
+    align-self: center;
+  }
+
+  .fix .venue {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+    display: flex;
+    gap: 14px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .fix .venue .ground-icon {
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+  .fix .venue .info b {
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.005em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .fix .venue .info .mn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    margin-top: 6px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= FOOTER ============= */
+  footer {
+    margin-top: 140px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  footer .sig {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 18px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink-soft);
+  }
+
+  /* ============= RESPONSIVE ============= */
+  @media (max-width: 880px) {
+    .featured-player { grid-template-columns: 1fr; gap: 32px; padding: 36px 0; }
+    .fp-stats { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  }
+  @media (max-width: 960px) {
+    .wrap { padding: 20px 24px 80px; }
+    .hero { margin-top: 56px; margin-bottom: 60px; }
+    .hero .ball-art { display: none; }
+    .hero-foot { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .hero-foot .blurb { grid-column: span 2; }
+    .season-grid { grid-template-columns: 1fr; gap: 16px; }
+    .season-grid .dots { grid-template-columns: repeat(20, 1fr); }
+    section { margin-top: 80px; }
+    .sec-head { grid-template-columns: 1fr; gap: 8px; }
+    .sec-head .stamp { text-align: left; }
+    .stats { grid-template-columns: 1fr; }
+    .stat-col { padding: 28px; }
+    .leader { grid-template-columns: 22px 1fr 50px auto; gap: 10px; }
+    .leader .spark { width: 50px; }
+    .fix { grid-template-columns: 1fr; gap: 18px; padding: 28px 0; }
+    .fix.feature { padding: 28px 24px; }
+    .fix .matchup { grid-column: auto; }
+    .fix .venue { text-align: left; justify-content: flex-start; }
+    .pt thead th:nth-child(3),
+    .pt thead th:nth-child(4),
+    .pt thead th:nth-child(5),
+    .pt thead th.bar-h,
+    .pt tbody td:nth-child(3),
+    .pt tbody td:nth-child(4),
+    .pt tbody td:nth-child(5),
+    .pt tbody td.bar-cell { display: none; }
+    nav.bar ul { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============= NAV ============= -->
+  <nav class="bar">
+    <div class="mark">
+      <!-- tiny ball icon -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="#ff6a3d" stroke-width="1.5"/>
+        <path d="M2 12 Q12 6 22 12" stroke="#ff6a3d" stroke-width="1" fill="none" stroke-dasharray="2 2"/>
+      </svg>
+      IPL <span class="sl">/</span> 26
+    </div>
+    <ul>
+      <li><a href="#standings">Standings</a></li>
+      <li><a href="#stats">Stats</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+    </ul>
+    <span class="live">Live · Wk 7</span>
+  </nav>
+
+  <!-- ============= HERO ============= -->
+  <section class="hero">
+
+    <!-- decorative cricket ball line-art -->
+    <svg class="ball-art" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="ballGlow" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#ff6a3d" stop-opacity="0.35"/>
+          <stop offset="55%" stop-color="#ff6a3d" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#ff6a3d" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- soft halo -->
+      <circle cx="140" cy="140" r="130" fill="url(#ballGlow)"/>
+      <!-- ball outline -->
+      <circle cx="140" cy="140" r="92" fill="none" stroke="#ff6a3d" stroke-width="1.4" opacity="0.85"/>
+      <!-- inner shadow ring -->
+      <circle cx="140" cy="140" r="86" fill="none" stroke="#ff6a3d" stroke-width="0.6" opacity="0.25"/>
+      <!-- equator -->
+      <ellipse cx="140" cy="140" rx="92" ry="22" fill="none" stroke="#ff6a3d" stroke-width="0.8" opacity="0.5" transform="rotate(-22 140 140)"/>
+      <!-- stitch line top -->
+      <ellipse cx="140" cy="138" rx="92" ry="14" fill="none" stroke="#ff6a3d" stroke-width="0.8" stroke-dasharray="3 4" opacity="0.85" transform="rotate(-22 140 140)"/>
+      <!-- stitch line bottom -->
+      <ellipse cx="140" cy="142" rx="92" ry="14" fill="none" stroke="#ff6a3d" stroke-width="0.8" stroke-dasharray="3 4" opacity="0.85" transform="rotate(-22 140 140)"/>
+      <!-- highlight -->
+      <circle cx="105" cy="108" r="14" fill="#ff6a3d" opacity="0.18"/>
+      <!-- meridian -->
+      <path d="M140 48 Q170 140 140 232" stroke="#ff6a3d" stroke-width="0.5" fill="none" opacity="0.3"/>
+      <path d="M140 48 Q110 140 140 232" stroke="#ff6a3d" stroke-width="0.5" fill="none" opacity="0.3"/>
+    </svg>
+
+    <div class="eyebrow">
+      <span class="pill acc">● Mid-season</span>
+      <span>Wed, 29 Apr 2026</span>
+      <span>Match 40 of 62</span>
+    </div>
+
+    <h1>
+      The <span class="ser">nineteenth</span><br>
+      season,<br>
+      <span class="dim">half-played.</span>
+    </h1>
+
+    <!-- season progress dot grid -->
+    <div class="season-grid">
+      <div class="dots" id="seasonDots"></div>
+      <div class="label">
+        <b>40 / 62</b>
+        65% complete<br>
+        Final · 31 May
+      </div>
+    </div>
+
+    <div class="hero-foot">
+      <div class="blurb">A mid-flight audit of the 2026 Indian Premier League — the table, the cap holders, and what's next on the calendar.</div>
+      <div class="stat"><div class="n">40</div><div class="l">Played</div></div>
+      <div class="stat"><div class="n">22</div><div class="l">To play</div></div>
+      <div class="stat"><div class="n">10</div><div class="l">Franchises</div></div>
+      <div class="stat"><div class="n">31&nbsp;May</div><div class="l">Final</div></div>
+    </div>
+  </section>
+
+  <!-- ============= FEATURED PLAYER ============= -->
+  <section class="featured-player">
+    <div class="fp-photo">
+      <span class="badge">● Story of the season</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Vaibhav_Suryavanshi_meets_PM_Modi.jpg" alt="Vaibhav Sooryavanshi" loading="lazy" />
+      <span class="credit">Photo · Wikimedia Commons</span>
+    </div>
+    <div class="fp-text">
+      <div class="tag"><b>14&nbsp;years</b> old · Rajasthan Royals</div>
+      <h2>Vaibhav <br><span class="ital">Sooryavanshi.</span></h2>
+      <p class="lede">A Bihari left-hander who, on a Tuesday in Ahmedabad, scored the fastest century in IPL history. He had been alive for 5,109 days; the innings took 36 deliveries.</p>
+      <div class="fp-stats">
+        <div class="s"><div class="n">36 <span class="acc">b</span></div><div class="l">Fastest century</div></div>
+        <div class="s"><div class="n">357</div><div class="l">Runs in 7 inn</div></div>
+        <div class="s"><div class="n">32</div><div class="l">Sixes (most)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= 01 · STANDINGS ============= -->
+  <section id="standings">
+    <div class="sec-head">
+      <div class="ix"><b>01</b> Standings</div>
+      <h2>Punjab Kings on top — <span class="ital">just</span>, after Rajasthan ended the unbeaten run.</h2>
+      <div class="stamp">After match 40<br>Updated 28 Apr</div>
+    </div>
+
+    <table class="pt">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Team</th>
+          <th>P</th>
+          <th>W</th>
+          <th>L</th>
+          <th>NRR</th>
+          <th class="form-h">Form</th>
+          <th>Pts</th>
+          <th class="bar-h">Distribution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="q">
+          <td class="pos">01</td>
+          <td class="team"><div class="nm">Punjab Kings</div><div class="ab">PBKS · MULLANPUR</div></td>
+          <td class="num">8</td><td class="num">6</td><td class="num">1</td>
+          <td class="nrr pos">+0.892</td>
+          <td class="form-cell"><span class="pip w"></span><span class="pip w"></span><span class="pip w"></span><span class="pip w"></span><span class="pip l"></span></td>
+          <td class="pts">13</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 100%;"></div></div></td>
+        </tr>
+        <tr class="q">
+          <td class="pos">02</td>
+          <td class="team"><div class="nm">Royal Challengers Bengaluru</div><div class="ab">RCB · CHINNASWAMY</div></td>
+          <td class="num">9</td><td class="num">6</td><td class="num">3</td>
+          <td class="nrr pos">+0.604</td>
+          <td class="form-cell"><span class="pip w"></span><span class="pip l"></span><span class="pip w"></span><span class="pip w"></span><span class="pip w"></span></td>
+          <td class="pts">12</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 92%;"></div></div></td>
+        </tr>
+        <tr class="q">
+          <td class="pos">03</td>
+          <td class="team"><div class="nm">Rajasthan Royals</div><div class="ab">RR · SAWAI MANSINGH</div></td>
+          <td class="num">9</td><td class="num">5</td><td class="num">4</td>
+          <td class="nrr pos">+0.318</td>
+          <td class="form-cell"><span class="pip l"></span><span class="pip w"></span><span class="pip w"></span><span class="pip l"></span><span class="pip w"></span></td>
+          <td class="pts">10</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 77%;"></div></div></td>
+        </tr>
+        <tr class="q qline">
+          <td class="pos">04</td>
+          <td class="team"><div class="nm">Sunrisers Hyderabad</div><div class="ab">SRH · UPPAL</div></td>
+          <td class="num">9</td><td class="num">5</td><td class="num">4</td>
+          <td class="nrr pos">+0.214</td>
+          <td class="form-cell"><span class="pip w"></span><span class="pip l"></span><span class="pip w"></span><span class="pip w"></span><span class="pip l"></span></td>
+          <td class="pts">10</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 77%;"></div></div></td>
+        </tr>
+        <tr>
+          <td class="pos">05</td>
+          <td class="team"><div class="nm">Gujarat Titans</div><div class="ab">GT · NARENDRA MODI</div></td>
+          <td class="num">9</td><td class="num">5</td><td class="num">4</td>
+          <td class="nrr pos">+0.071</td>
+          <td class="form-cell"><span class="pip w"></span><span class="pip w"></span><span class="pip l"></span><span class="pip l"></span><span class="pip w"></span></td>
+          <td class="pts">10</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 77%;"></div></div></td>
+        </tr>
+        <tr>
+          <td class="pos">06</td>
+          <td class="team"><div class="nm">Kolkata Knight Riders</div><div class="ab">KKR · EDEN GARDENS</div></td>
+          <td class="num">9</td><td class="num">4</td><td class="num">5</td>
+          <td class="nrr neg">−0.094</td>
+          <td class="form-cell"><span class="pip l"></span><span class="pip w"></span><span class="pip w"></span><span class="pip l"></span><span class="pip l"></span></td>
+          <td class="pts">8</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 62%;"></div></div></td>
+        </tr>
+        <tr>
+          <td class="pos">07</td>
+          <td class="team"><div class="nm">Chennai Super Kings</div><div class="ab">CSK · CHEPAUK</div></td>
+          <td class="num">9</td><td class="num">4</td><td class="num">5</td>
+          <td class="nrr neg">−0.218</td>
+          <td class="form-cell"><span class="pip w"></span><span class="pip l"></span><span class="pip l"></span><span class="pip w"></span><span class="pip w"></span></td>
+          <td class="pts">8</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 62%;"></div></div></td>
+        </tr>
+        <tr>
+          <td class="pos">08</td>
+          <td class="team"><div class="nm">Mumbai Indians</div><div class="ab">MI · WANKHEDE</div></td>
+          <td class="num">8</td><td class="num">3</td><td class="num">5</td>
+          <td class="nrr neg">−0.380</td>
+          <td class="form-cell"><span class="pip l"></span><span class="pip l"></span><span class="pip w"></span><span class="pip w"></span><span class="pip l"></span></td>
+          <td class="pts">6</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 46%;"></div></div></td>
+        </tr>
+        <tr>
+          <td class="pos">09</td>
+          <td class="team"><div class="nm">Delhi Capitals</div><div class="ab">DC · ARUN JAITLEY</div></td>
+          <td class="num">9</td><td class="num">3</td><td class="num">6</td>
+          <td class="nrr neg">−0.514</td>
+          <td class="form-cell"><span class="pip l"></span><span class="pip w"></span><span class="pip l"></span><span class="pip l"></span><span class="pip l"></span></td>
+          <td class="pts">6</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 46%;"></div></div></td>
+        </tr>
+        <tr>
+          <td class="pos">10</td>
+          <td class="team"><div class="nm">Lucknow Super Giants</div><div class="ab">LSG · EKANA</div></td>
+          <td class="num">8</td><td class="num">2</td><td class="num">6</td>
+          <td class="nrr neg">−0.842</td>
+          <td class="form-cell"><span class="pip l"></span><span class="pip l"></span><span class="pip w"></span><span class="pip l"></span><span class="pip l"></span></td>
+          <td class="pts">4</td>
+          <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width: 31%;"></div></div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pt-foot">
+      <div class="key">
+        <span><span class="dot"></span> Top 4 → Playoffs</span>
+        <span>Form · oldest → newest</span>
+        <span>Bars · relative to leader</span>
+      </div>
+      <div>League ends 24 May</div>
+    </div>
+  </section>
+
+  <!-- ============= 02 · STATS ============= -->
+  <section id="stats">
+    <div class="sec-head">
+      <div class="ix"><b>02</b> Statistics</div>
+      <h2>The cap holders, and the <span class="ital">tournament</span> records so far.</h2>
+      <div class="stamp">After match 40<br>Public sources</div>
+    </div>
+
+    <div class="stats">
+      <!-- ORANGE -->
+      <div class="stat-col">
+        <div class="cap-tag"><span class="swatch"></span> Orange Cap · most runs</div>
+        <h3>Abhishek Sharma <span class="ital">leads,</span> by twenty-three.</h3>
+        <p class="blurb">A four-way scrap inside thirty runs — sparklines show innings-by-innings runs.</p>
+
+        <div class="leader top">
+          <div class="rk">01</div>
+          <div class="avatar mono srh">AS</div>
+          <div class="who"><div class="nm">Abhishek Sharma</div><div class="tm">SRH · 8 INN</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#ff6a3d">
+              <rect x="0"  y="14" width="6" height="14"/>
+              <rect x="7"  y="20" width="6" height="8"/>
+              <rect x="14" y="2"  width="6" height="26"/>
+              <rect x="21" y="18" width="6" height="10"/>
+              <rect x="28" y="10" width="6" height="18"/>
+              <rect x="35" y="22" width="6" height="6"/>
+              <rect x="42" y="6"  width="6" height="22"/>
+              <rect x="49" y="16" width="6" height="12"/>
+            </g>
+          </svg>
+          <div class="val">380<span class="sub">avg 47.5</span></div>
+        </div>
+        <div class="leader">
+          <div class="rk">02</div>
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/commons/6/69/KL_Rahul_at_Femina_Miss_India_2018_Grand_Finale_%28cropped%29.jpg" alt="KL Rahul" loading="lazy"/></div>
+          <div class="who"><div class="nm">KL Rahul</div><div class="tm">DC · 9 INN</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#b8b3a4">
+              <rect x="0"  y="6"  width="5" height="22"/>
+              <rect x="6"  y="20" width="5" height="8"/>
+              <rect x="12" y="14" width="5" height="14"/>
+              <rect x="18" y="10" width="5" height="18"/>
+              <rect x="24" y="22" width="5" height="6"/>
+              <rect x="30" y="8"  width="5" height="20"/>
+              <rect x="36" y="16" width="5" height="12"/>
+              <rect x="42" y="12" width="5" height="16"/>
+              <rect x="48" y="4"  width="5" height="24"/>
+            </g>
+          </svg>
+          <div class="val">357<span class="sub">avg 51.0</span></div>
+        </div>
+        <div class="leader">
+          <div class="rk">03</div>
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Vaibhav_Suryavanshi_meets_PM_Modi.jpg" alt="Vaibhav Sooryavanshi" loading="lazy"/></div>
+          <div class="who"><div class="nm">Vaibhav Sooryavanshi</div><div class="tm">RR · 7 INN</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#b8b3a4">
+              <rect x="0"  y="18" width="7" height="10"/>
+              <rect x="8"  y="0"  width="7" height="28"/>
+              <rect x="16" y="22" width="7" height="6"/>
+              <rect x="24" y="14" width="7" height="14"/>
+              <rect x="32" y="20" width="7" height="8"/>
+              <rect x="40" y="10" width="7" height="18"/>
+              <rect x="48" y="6"  width="7" height="22"/>
+            </g>
+          </svg>
+          <div class="val">357<span class="sub">avg 59.5</span></div>
+        </div>
+        <div class="leader">
+          <div class="rk">04</div>
+          <div class="avatar mono srh">HK</div>
+          <div class="who"><div class="nm">Heinrich Klaasen</div><div class="tm">SRH · 9 INN</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#b8b3a4">
+              <rect x="0"  y="12" width="5" height="16"/>
+              <rect x="6"  y="8"  width="5" height="20"/>
+              <rect x="12" y="20" width="5" height="8"/>
+              <rect x="18" y="14" width="5" height="14"/>
+              <rect x="24" y="10" width="5" height="18"/>
+              <rect x="30" y="22" width="5" height="6"/>
+              <rect x="36" y="16" width="5" height="12"/>
+              <rect x="42" y="6"  width="5" height="22"/>
+              <rect x="48" y="14" width="5" height="14"/>
+            </g>
+          </svg>
+          <div class="val">349<span class="sub">avg 49.8</span></div>
+        </div>
+        <div class="leader">
+          <div class="rk">05</div>
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Shubman_Gill_2023_%28cropped%29.jpg" alt="Shubman Gill" loading="lazy"/></div>
+          <div class="who"><div class="nm">Shubman Gill</div><div class="tm">GT (c) · 9 INN</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#b8b3a4">
+              <rect x="0"  y="20" width="5" height="8"/>
+              <rect x="6"  y="14" width="5" height="14"/>
+              <rect x="12" y="10" width="5" height="18"/>
+              <rect x="18" y="18" width="5" height="10"/>
+              <rect x="24" y="6"  width="5" height="22"/>
+              <rect x="30" y="22" width="5" height="6"/>
+              <rect x="36" y="14" width="5" height="14"/>
+              <rect x="42" y="16" width="5" height="12"/>
+              <rect x="48" y="20" width="5" height="8"/>
+            </g>
+          </svg>
+          <div class="val">330<span class="sub">avg 41.2</span></div>
+        </div>
+      </div>
+
+      <!-- PURPLE -->
+      <div class="stat-col">
+        <div class="cap-tag purple"><span class="swatch"></span> Purple Cap · most wickets</div>
+        <h3>A <span class="ital">four-way</span> tie at the top, on fourteen.</h3>
+        <p class="blurb">Closest race the cap has ever seen — sparklines show wickets per match.</p>
+
+        <div class="leader top purple">
+          <div class="rk">01</div>
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Bhuvneshwar_kumar_With_Rashid_Zirak_%28Bhuvneshwar_Kumar_cropped%29.jpg/330px-Bhuvneshwar_kumar_With_Rashid_Zirak_%28Bhuvneshwar_Kumar_cropped%29.jpg" alt="Bhuvneshwar Kumar" loading="lazy"/></div>
+          <div class="who"><div class="nm">Bhuvneshwar Kumar</div><div class="tm">RCB · 9 M</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#a86bd6">
+              <rect x="0"  y="20" width="5" height="8"/>
+              <rect x="6"  y="14" width="5" height="14"/>
+              <rect x="12" y="6"  width="5" height="22"/>
+              <rect x="18" y="20" width="5" height="8"/>
+              <rect x="24" y="10" width="5" height="18"/>
+              <rect x="30" y="20" width="5" height="8"/>
+              <rect x="36" y="14" width="5" height="14"/>
+              <rect x="42" y="6"  width="5" height="22"/>
+              <rect x="48" y="20" width="5" height="8"/>
+            </g>
+          </svg>
+          <div class="val">14<span class="sub">econ 7.1</span></div>
+        </div>
+        <div class="leader">
+          <div class="rk">=01</div>
+          <div class="avatar mono csk">AK</div>
+          <div class="who"><div class="nm">Anshul Kamboj</div><div class="tm">CSK · 9 M</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#b8b3a4">
+              <rect x="0"  y="14" width="5" height="14"/>
+              <rect x="6"  y="20" width="5" height="8"/>
+              <rect x="12" y="6"  width="5" height="22"/>
+              <rect x="18" y="14" width="5" height="14"/>
+              <rect x="24" y="20" width="5" height="8"/>
+              <rect x="30" y="10" width="5" height="18"/>
+              <rect x="36" y="20" width="5" height="8"/>
+              <rect x="42" y="14" width="5" height="14"/>
+              <rect x="48" y="6"  width="5" height="22"/>
+            </g>
+          </svg>
+          <div class="val">14<span class="sub">econ 8.2</span></div>
+        </div>
+        <div class="leader">
+          <div class="rk">=01</div>
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Jofra_Archer_%283%29.jpg" alt="Jofra Archer" loading="lazy"/></div>
+          <div class="who"><div class="nm">Jofra Archer</div><div class="tm">RR · 8 M</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#b8b3a4">
+              <rect x="0"  y="0"  width="6" height="28"/>
+              <rect x="7"  y="14" width="6" height="14"/>
+              <rect x="14" y="20" width="6" height="8"/>
+              <rect x="21" y="14" width="6" height="14"/>
+              <rect x="28" y="20" width="6" height="8"/>
+              <rect x="35" y="6"  width="6" height="22"/>
+              <rect x="42" y="14" width="6" height="14"/>
+              <rect x="49" y="20" width="6" height="8"/>
+            </g>
+          </svg>
+          <div class="val">14<span class="sub">econ 7.6</span></div>
+        </div>
+        <div class="leader">
+          <div class="rk">=01</div>
+          <div class="avatar mono srh">EM</div>
+          <div class="who"><div class="nm">Eshan Malinga</div><div class="tm">SRH · 9 M</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#b8b3a4">
+              <rect x="0"  y="14" width="5" height="14"/>
+              <rect x="6"  y="6"  width="5" height="22"/>
+              <rect x="12" y="20" width="5" height="8"/>
+              <rect x="18" y="20" width="5" height="8"/>
+              <rect x="24" y="14" width="5" height="14"/>
+              <rect x="30" y="6"  width="5" height="22"/>
+              <rect x="36" y="20" width="5" height="8"/>
+              <rect x="42" y="14" width="5" height="14"/>
+              <rect x="48" y="20" width="5" height="8"/>
+            </g>
+          </svg>
+          <div class="val">14<span class="sub">econ 8.8</span></div>
+        </div>
+        <div class="leader">
+          <div class="rk">05</div>
+          <div class="avatar mono lsg">PY</div>
+          <div class="who"><div class="nm">Prince Yadav</div><div class="tm">LSG · 8 M</div></div>
+          <svg class="spark" viewBox="0 0 60 28" preserveAspectRatio="none">
+            <g fill="#b8b3a4">
+              <rect x="0"  y="20" width="6" height="8"/>
+              <rect x="7"  y="14" width="6" height="14"/>
+              <rect x="14" y="20" width="6" height="8"/>
+              <rect x="21" y="14" width="6" height="14"/>
+              <rect x="28" y="6"  width="6" height="22"/>
+              <rect x="35" y="20" width="6" height="8"/>
+              <rect x="42" y="14" width="6" height="14"/>
+              <rect x="49" y="20" width="6" height="8"/>
+            </g>
+          </svg>
+          <div class="val">12<span class="sub">econ 7.9</span></div>
+        </div>
+      </div>
+
+      <!-- RECORDS -->
+      <div class="stat-col">
+        <!-- decorative pitch in the corner -->
+        <svg class="stat-col-corner" width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="20" y="6" width="20" height="48" stroke="#d6b067" stroke-width="0.8" fill="none" opacity="0.7"/>
+          <rect x="22" y="10" width="16" height="40" fill="rgba(214,176,103,0.06)"/>
+          <line x1="20" y1="14" x2="40" y2="14" stroke="#d6b067" stroke-width="0.6" opacity="0.55"/>
+          <line x1="20" y1="46" x2="40" y2="46" stroke="#d6b067" stroke-width="0.6" opacity="0.55"/>
+          <line x1="27" y1="10" x2="33" y2="10" stroke="#d6b067" stroke-width="1.4" opacity="0.85"/>
+          <line x1="27" y1="50" x2="33" y2="50" stroke="#d6b067" stroke-width="1.4" opacity="0.85"/>
+        </svg>
+
+        <div class="cap-tag amber"><span class="swatch"></span> The record book</div>
+        <h3>Sooryavanshi&rsquo;s <span class="ital">thirty-six.</span></h3>
+        <p class="blurb">The fastest century in IPL history — scored on a Tuesday at Ahmedabad.</p>
+
+        <div class="records-list">
+          <div class="rec-row">
+            <div>
+              <div class="lbl">Fastest century</div>
+              <div class="who"><span class="rec-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Vaibhav_Suryavanshi_meets_PM_Modi.jpg" alt=""/></span><span class="text">V. Sooryavanshi <small>RR vs GT · Ahmedabad</small></span></div>
+            </div>
+            <div class="num">36 <span class="acc">b</span></div>
+          </div>
+          <div class="rec-row">
+            <div>
+              <div class="lbl">Highest individual score</div>
+              <div class="who"><span class="rec-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Sanju_Samson_in_PMO_New_Delhi.jpg/330px-Sanju_Samson_in_PMO_New_Delhi.jpg" alt=""/></span><span class="text">Sanju Samson <small>CSK vs RR</small></span></div>
+            </div>
+            <div class="num">141<span class="acc">*</span></div>
+          </div>
+          <div class="rec-row">
+            <div>
+              <div class="lbl">Most sixes (season)</div>
+              <div class="who"><span class="rec-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Vaibhav_Suryavanshi_meets_PM_Modi.jpg" alt=""/></span><span class="text">V. Sooryavanshi <small>RR · in 7 inn</small></span></div>
+            </div>
+            <div class="num">32</div>
+          </div>
+          <div class="rec-row">
+            <div>
+              <div class="lbl">Best bowling</div>
+              <div class="who"><span class="rec-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Jofra_Archer_%283%29.jpg" alt=""/></span><span class="text">Jofra Archer <small>RR vs DC · Jaipur</small></span></div>
+            </div>
+            <div class="num">5/18</div>
+          </div>
+          <div class="rec-row">
+            <div>
+              <div class="lbl">Highest team total</div>
+              <div class="who"><span class="text">Sunrisers Hyderabad <small>vs PBKS · Uppal</small></span></div>
+            </div>
+            <div class="num">256<span class="acc">/3</span></div>
+          </div>
+          <div class="rec-row">
+            <div>
+              <div class="lbl">Most centuries</div>
+              <div class="who"><span class="rec-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Sanju_Samson_in_PMO_New_Delhi.jpg/330px-Sanju_Samson_in_PMO_New_Delhi.jpg" alt=""/></span><span class="text">Sanju Samson <small>CSK</small></span></div>
+            </div>
+            <div class="num">2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= 03 · UP NEXT ============= -->
+  <section id="schedule">
+    <div class="sec-head">
+      <div class="ix"><b>03</b> Schedule</div>
+      <h2>Six fixtures over the <span class="ital">next five</span> nights.</h2>
+      <div class="stamp">All times IST<br>Subject to change</div>
+    </div>
+
+    <div class="fixtures">
+
+      <!-- FEATURE -->
+      <div class="fix feature">
+        <div class="when">
+          <span class="day">Thursday</span>
+          <span class="date">30 Apr</span>
+          <span class="time">7:30 PM IST</span>
+          <span class="tag">Top vs Top</span>
+        </div>
+        <div class="matchup">
+          <div class="side"><div class="ab">GT</div><div class="nm">Gujarat Titans · 5th</div></div>
+          <div class="vs">vs</div>
+          <div class="side right"><div class="ab">RCB</div><div class="nm">Royal Challengers · 2nd</div></div>
+        </div>
+        <div class="venue">
+          <svg class="ground-icon" width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="21" cy="21" rx="18" ry="16" fill="none" stroke="#ff6a3d" stroke-width="1"/>
+            <ellipse cx="21" cy="21" rx="9"  ry="8" fill="none" stroke="#ff6a3d" stroke-width="0.8" opacity="0.6"/>
+            <rect x="19" y="12" width="4" height="18" stroke="#ff6a3d" stroke-width="0.7" fill="rgba(255,106,61,0.1)"/>
+            <line x1="19" y1="14" x2="23" y2="14" stroke="#ff6a3d" stroke-width="0.5"/>
+            <line x1="19" y1="28" x2="23" y2="28" stroke="#ff6a3d" stroke-width="0.5"/>
+          </svg>
+          <div class="info">
+            <b>Narendra Modi Stadium</b>
+            Ahmedabad, GJ
+            <div class="mn">Match 41</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix">
+        <div class="when">
+          <span class="day">Friday</span>
+          <span class="date">1 May</span>
+          <span class="time">7:30 PM IST</span>
+        </div>
+        <div class="matchup">
+          <div class="side"><div class="ab">RR</div><div class="nm">Rajasthan · 3rd</div></div>
+          <div class="vs">vs</div>
+          <div class="side right"><div class="ab">DC</div><div class="nm">Delhi · 9th</div></div>
+        </div>
+        <div class="venue">
+          <svg class="ground-icon" width="36" height="36" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="21" cy="21" rx="18" ry="16" fill="none" stroke="#76746c" stroke-width="0.9"/>
+            <ellipse cx="21" cy="21" rx="9"  ry="8" fill="none" stroke="#76746c" stroke-width="0.6" opacity="0.6"/>
+            <rect x="19" y="12" width="4" height="18" stroke="#76746c" stroke-width="0.6" fill="none"/>
+          </svg>
+          <div class="info">
+            <b>Sawai Mansingh Stadium</b>
+            Jaipur, RJ
+            <div class="mn">Match 42</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix">
+        <div class="when">
+          <span class="day">Saturday</span>
+          <span class="date">2 May</span>
+          <span class="time">7:30 PM IST</span>
+        </div>
+        <div class="matchup">
+          <div class="side"><div class="ab">CSK</div><div class="nm">Chennai · 7th</div></div>
+          <div class="vs">vs</div>
+          <div class="side right"><div class="ab">MI</div><div class="nm">Mumbai · 8th</div></div>
+        </div>
+        <div class="venue">
+          <svg class="ground-icon" width="36" height="36" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="21" cy="21" rx="18" ry="16" fill="none" stroke="#76746c" stroke-width="0.9"/>
+            <ellipse cx="21" cy="21" rx="9"  ry="8" fill="none" stroke="#76746c" stroke-width="0.6" opacity="0.6"/>
+            <rect x="19" y="12" width="4" height="18" stroke="#76746c" stroke-width="0.6" fill="none"/>
+          </svg>
+          <div class="info">
+            <b>M. A. Chidambaram</b>
+            Chennai, TN
+            <div class="mn">Match 43 · El Clásico</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix">
+        <div class="when">
+          <span class="day">Sunday</span>
+          <span class="date">3 May</span>
+          <span class="time">3:30 PM IST</span>
+        </div>
+        <div class="matchup">
+          <div class="side"><div class="ab">SRH</div><div class="nm">Hyderabad · 4th</div></div>
+          <div class="vs">vs</div>
+          <div class="side right"><div class="ab">KKR</div><div class="nm">Kolkata · 6th</div></div>
+        </div>
+        <div class="venue">
+          <svg class="ground-icon" width="36" height="36" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="21" cy="21" rx="18" ry="16" fill="none" stroke="#76746c" stroke-width="0.9"/>
+            <ellipse cx="21" cy="21" rx="9"  ry="8" fill="none" stroke="#76746c" stroke-width="0.6" opacity="0.6"/>
+            <rect x="19" y="12" width="4" height="18" stroke="#76746c" stroke-width="0.6" fill="none"/>
+          </svg>
+          <div class="info">
+            <b>Rajiv Gandhi International</b>
+            Hyderabad, TG
+            <div class="mn">Match 44 · Doubleheader</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix">
+        <div class="when">
+          <span class="day">Sunday</span>
+          <span class="date">3 May</span>
+          <span class="time">7:30 PM IST</span>
+        </div>
+        <div class="matchup">
+          <div class="side"><div class="ab">GT</div><div class="nm">Gujarat · 5th</div></div>
+          <div class="vs">vs</div>
+          <div class="side right"><div class="ab">PBKS</div><div class="nm">Punjab · 1st</div></div>
+        </div>
+        <div class="venue">
+          <svg class="ground-icon" width="36" height="36" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="21" cy="21" rx="18" ry="16" fill="none" stroke="#76746c" stroke-width="0.9"/>
+            <ellipse cx="21" cy="21" rx="9"  ry="8" fill="none" stroke="#76746c" stroke-width="0.6" opacity="0.6"/>
+            <rect x="19" y="12" width="4" height="18" stroke="#76746c" stroke-width="0.6" fill="none"/>
+          </svg>
+          <div class="info">
+            <b>Narendra Modi Stadium</b>
+            Ahmedabad, GJ
+            <div class="mn">Match 45</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix">
+        <div class="when">
+          <span class="day">Monday</span>
+          <span class="date">4 May</span>
+          <span class="time">7:30 PM IST</span>
+        </div>
+        <div class="matchup">
+          <div class="side"><div class="ab">MI</div><div class="nm">Mumbai · 8th</div></div>
+          <div class="vs">vs</div>
+          <div class="side right"><div class="ab">LSG</div><div class="nm">Lucknow · 10th</div></div>
+        </div>
+        <div class="venue">
+          <svg class="ground-icon" width="36" height="36" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="21" cy="21" rx="18" ry="16" fill="none" stroke="#76746c" stroke-width="0.9"/>
+            <ellipse cx="21" cy="21" rx="9"  ry="8" fill="none" stroke="#76746c" stroke-width="0.6" opacity="0.6"/>
+            <rect x="19" y="12" width="4" height="18" stroke="#76746c" stroke-width="0.6" fill="none"/>
+          </svg>
+          <div class="info">
+            <b>Wankhede Stadium</b>
+            Mumbai, MH
+            <div class="mn">Match 46</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= FOOTER ============= -->
+  <footer>
+    <div>IPL 2026 · One-pager</div>
+    <div class="sig">— set in Inter Tight &amp; Instrument Serif</div>
+    <div>Sources · ESPNcricinfo, IPLT20</div>
+  </footer>
+
+</div>
+
+<script>
+  // generate the 62-match season progress dot grid
+  (function () {
+    var grid = document.getElementById('seasonDots');
+    if (!grid) return;
+    var played = 40;
+    var current = 41; // next match
+    var total = 62;
+    var html = '';
+    for (var i = 1; i <= total; i++) {
+      var cls = 'dot';
+      if (i === current) cls += ' next';
+      else if (i > played) cls += ' upcoming';
+      html += '<div class="' + cls + '" title="Match ' + i + '"></div>';
+    }
+    grid.innerHTML = html;
+  })();
+</script>
+</body>
+</html>
